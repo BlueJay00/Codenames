@@ -1,3 +1,28 @@
+#!/usr/bin/env python
+
+__description__ = 'Unique code name generator with an adjective and a noun from either online list of words or local wordlist file'
+__author__ = 'BlueJay00'
+__version__ = '0.0.1'
+__date__ = '2024/10/30'
+
+
+"""
+History:
+  2024/10/29: start v0.0.01
+  2024/10/30: continue v0.0.05
+  2024/10/30: first publication v0.0.1
+  
+Todo:
+- Add the generated code names into the list the files with the list of used code names.
+- Output a list of codenames instead of just one code name
+- Option to give this output in different formats: CSV, JSON, plain text.
+- Logging and Export: save generated code names into a specified file, with an option for appending or overwriting.
+- Case customization: options for all upper case, all lowercase or title case.
+- Word Filtering: add a filter to exclude words, either based on scpecific words, or based on length.
+- Batch size: set a number of code names to generate at once.
+
+"""
+
 import random
 import requests
 import json
