@@ -2,8 +2,8 @@
 
 __description__ = 'Unique code name generator with an adjective and a noun from either online list of words or local wordlist file'
 __author__ = 'BlueJay00'
-__version__ = '0.0.1'
-__date__ = '2024/10/30'
+__version__ = '0.0.2'
+__date__ = '2024/11/01'
 
 
 """
@@ -11,9 +11,12 @@ History:
   2024/10/29: start v0.0.01
   2024/10/30: continue v0.0.05
   2024/10/30: first publication v0.0.1
+  2024/11/01: added append option v.0.0.2
   
+Done:
+- Add the generated code names into the file with the list of used code names.
+
 Todo:
-- Add the generated code names into the list the files with the list of used code names.
 - Output a list of codenames instead of just one code name
 - Option to give this output in different formats: CSV, JSON, plain text.
 - Logging and Export: save generated code names into a specified file, with an option for appending or overwriting.
@@ -42,6 +45,15 @@ def load_words_from_file(file_path, encoding="utf-8"):
         print(f"Error reading file {file_path} with encoding {encoding}: {e}")
         return []
 
+def append_to_used_code_names_file(code_name, file_path):
+    """
+    Append the generated code name to the list of used code names file.
+    """
+    try:
+        with open(file_path, 'a', encoding="utf-8") as file:
+            file.write(f"{code_name}\n")
+    except IOError as e:
+        print(f"Error writing to file {file_path}: {e}")
 
 def fetch_words_from_url(url, key):
     """
@@ -146,7 +158,7 @@ def generate_unique_code_name(adjectives, nouns, used_adjectives, used_nouns):
     return None
 
 # Main function to run the code name generator
-def main(adjective_file=None, noun_file=None, used_code_names_file=None):
+def main(adjective_file=None, noun_file=None, used_code_names_file=None, append=False):
     adjectives, nouns = get_words(adjective_file, noun_file)
     if not adjectives or not nouns:
         print("Error: Adjective or noun list is empty.")
@@ -159,6 +171,8 @@ def main(adjective_file=None, noun_file=None, used_code_names_file=None):
     code_name = generate_unique_code_name(adjectives, nouns, used_adjectives, used_nouns)
     if code_name:
         print(f"Generated code name: {code_name}")
+        if append and used_code_names_file:
+            append_to_used_code_names_file(code_name, used_code_names_file)
     else:
         print("No unique code names could be generated.")
 
@@ -168,7 +182,8 @@ if __name__ == "__main__":
     parser.add_argument("-a", "--adjectives", help="Path to the local adjectives file", default=None)
     parser.add_argument("-n", "--nouns", help="Path to the local nouns file", default=None)
     parser.add_argument("-u", "--used", help="Path to the file containing used code names", default=None)
+    parser.add_argument("-ap", "--append", action="store_true", help="Append the generated code name to the used code names file.")
 
     args = parser.parse_args()
 
-    main(adjective_file=args.adjectives, noun_file=args.nouns, used_code_names_file=args.used)
+    main(adjective_file=args.adjectives, noun_file=args.nouns, used_code_names_file=args.used, append=args.append)
