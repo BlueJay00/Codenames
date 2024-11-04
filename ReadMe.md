@@ -39,6 +39,11 @@ Generate a code name using custom adjective and noun files, excluding used code 
 python codenames.py -a adjectives.txt -n nouns.txt -u used_code_names.txt
 ```
 
+4. To generate a code name and append it to the list of used code names:
+
+```json
+python codenames.py -a adjectives.txt -n nouns.txt -u used_codenames.txt -ap
+```
 
 ## Used Code Names File Format
 The used code names file should list each code name on a new line in the following format: <br />
